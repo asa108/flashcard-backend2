@@ -1,8 +1,23 @@
 'use strict';
+const {sanitizeEntity} = require('strapi-utils')
 
-/**
- * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
- * to customize this controller
- */
+module.exports = {
+    // Get logged in user
+    async me(ctx) {
+        const user = ctx.state.user
 
-module.exports = {};
+        if (!user) {
+            return ctx.badRequest(null, [
+                {message:[{id:'No authorizartion header was found'}]}
+            ])
+        }
+
+        const data = await strapi.services.flashcards.find({ user: user.id })
+        
+        if (!data) {
+            return ctx.notFound()
+        }
+
+        return sanitizeEntity(data,{model:strapi.models.flashcards})
+    }
+};

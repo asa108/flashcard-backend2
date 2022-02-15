@@ -8,6 +8,14 @@
         "policies": []
       }
     },
+        {
+      "method": "GET",
+      "path": "/flashcards/me",
+      "handler": "flashcards.me",
+      "config": {
+        "policies": []
+      }
+    },
     {
       "method": "GET",
       "path": "/flashcards/count",
